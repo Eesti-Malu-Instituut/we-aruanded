@@ -1,0 +1,249 @@
+{
+  "sql": {
+    "select": [
+      "COUNT(DISTINCT k.persoon) records",
+      "YEAR(STR_TO_DATE(k.Sünd, '%Y-%m-%d')) year"
+    ],
+    "from": ["memoriaal.kirjed k"],
+    "group_by": ["year"],
+    "order_by": ["year"]
+  },
+  "columns": {
+    "repressed": "Represseeritute arv"
+  },
+  "filters": {
+    "occurrences": {
+      "data": {
+        "header": "Toimumise järgi:",
+        "columns": {
+          "repressed": "Represseeritute arv",
+          "arrested": "Arreteeritud",
+          "deported": "Küüditatud"
+        }
+      },
+      "1941-arrests-deportations": {
+        "occurrence": 1941,
+        "type": "checkbox",
+        "label": "1941 arreteerimised / küüditamised",
+        "disabled": "true",
+        "visible": "true"
+      },
+      "1945-deportations": {
+        "occurrence": 1945,
+        "type": "checkbox",
+        "label": "1945 küüditamised",
+        "disabled": "true",
+        "visible": "true"
+      },
+      "1949-deportations": {
+        "occurrence": 1949,
+        "type": "checkbox",
+        "label": "1949 küüditamised",
+        "visible": "true",
+        "sql": {
+          "join": "LEFT JOIN memoriaal.49_kyyd_vab kv ON kv.persoon = k.persoon",
+          "where": {
+            "repressions": "kv.persoon IS NOT NULL"
+          }
+        },
+        "extra_sql": {
+          "arrested": "SELECT COUNT(DISTINCT k.persoon) records, YEAR(STR_TO_DATE(k.Sünd, '%Y-%m-%d')) year FROM memoriaal.kirjed k LEFT JOIN memoriaal.eraf_nimistu_vastetega env ON env.persoon = k.persoon WHERE env.persoon IS NOT NULL AND env.arreteeritud = 'Arreteeritud' GROUP BY year"
+        }
+      }
+    },
+    "arrests": {
+      "data": {
+        "header": "Arreteerimised kogu perioodi jooksul:",
+        "columns": {
+          "repressed": "Arreteeritute arv"
+        }
+      },
+      "all-arrests-during-period": {
+        "occurrence": 1949,
+        "type": "checkbox",
+        "label": "Arreteerimised",
+        "visible": "true",
+        "sql": {
+          "join": "LEFT JOIN memoriaal.eraf_nimistu_vastetega env ON env.persoon = k.persoon",
+          "where": {
+            "arrested": "env.persoon IS NOT NULL AND env.arreteeritud = 'Arreteeritud'"
+          }
+        }
+      }
+    },
+    "departure": {
+      "data": {
+        "header": "Riik, mille kaudu põgenenud:",
+        "columns": {
+          "repressed": "Isikute arv"
+        }
+      },
+      "fled-to-sweden": {
+        "occurrence": 1944,
+        "type": "checkbox",
+        "label": "Rootsi kaudu põgenenud",
+        "visible": "true",
+        "sql": {
+          "join": "LEFT JOIN memoriaal.kirmus4 k4 ON k4.persoon = k.persoon LEFT JOIN memoriaal.polisforhor p ON p.persoon = k.persoon",
+          "where": {
+            "fled": "(k4.persoon IS NOT NULL OR p.persoon IS NOT NULL)"
+          }
+        }
+      },
+      "fled-to-germany": {
+        "occurrence": 1944,
+        "type": "checkbox",
+        "label": "Saksamaa kaudu põgenenud",
+        "disabled": "false",
+        "visible": "true",
+        "sql": {
+          "join": "LEFT JOIN memoriaal.arolsen ar ON ar.persoon = k.persoon",
+          "where": {
+            "fled": "(ar.persoon IS NOT NULL AND ar.archival_unit_num LIKE '3%')"
+          }
+        }
+      },
+      "fled-to-finland": {
+        "type": "checkbox",
+        "label": "Soome kaudu põgenenud",
+        "disabled": "true",
+        "visible": "true"
+      }
+    },
+    "military-service": {
+      "data": {
+        "header": "Teenistuse järgi:",
+        "columns": {
+          "repressed": "Isikute arv"
+        }
+      },
+      "german-military-service": {
+        "occurrence": 1944,
+        "type": "checkbox",
+        "label": "Saksa sõjaväes teeninud",
+        "visible": "true",
+        "sql": {
+          "join": "LEFT JOIN memoriaal.R14_R16 r ON r.persoon = k.persoon",
+          "where": {
+            "military": "r.persoon IS NOT NULL"
+          }
+        }
+      },
+      "soviet-military-service": {
+        "type": "checkbox",
+        "label": "Punaarmees teeninud",
+        "disabled": "true",
+        "visible": "true"
+      }
+    },
+    "gender": {
+      "data": {
+        "header": "Sugu:",
+        "columns": {
+          "repressed": "Isikute arv"
+        }
+      },
+      "gender-male": {
+        "type": "checkbox",
+        "label": "Mees",
+        "visible": "true",
+        "sql": {
+          "select": "k.Sugu",
+          "where": "k.Sugu = \"M\""
+        }
+      },
+      "gender-female": {
+        "type": "checkbox",
+        "label": "Naine",
+        "visible": "true",
+        "sql": {
+          "select": "k.Sugu",
+          "where": "k.Sugu = \"N\""
+        }
+      }
+    },
+    "education": {
+      "data": {
+        "header": "Tartu ülikoolis õppinud:",
+        "columns": {
+          "repressed": "Isikute arv"
+        }
+      },
+      "has-studied-at-university": {
+        "type": "checkbox",
+        "label": "Jah",
+        "visible": "true",
+        "sql": {
+          "join": "LEFT JOIN memoriaal.album_academicum aa ON aa.persoon = k.persoon",
+          "where": "aa.persoon IS NOT NULL"
+        }
+      }
+    },
+    "text-input-1": {
+      "data": {
+        "header": "Sünniaja järgi:",
+        "columns": {
+          "repressed": "Isikute arv"
+        }
+      },
+      "date-of-birth-from-to": {
+        "type": "input",
+        "placeholder": "Alates aasta",
+        "visible": "true",
+        "sql": {
+          "where": "YEAR(STR_TO_DATE(k.Sünd, \"%Y-%m-%d\")) >= {{value}}"
+        }
+      }
+    },
+    "text-input-2": {
+      "data": {
+        "header": "Sünnikoha järgi:",
+        "columns": {
+          "repressed": "Isikute arv"
+        }
+      },
+      "birthplace-input": {
+        "type": "input",
+        "placeholder": "",
+        "visible": "true",
+        "sql": {
+          "select": "k.Sünnikoht",
+          "where": "k.Sünnikoht LIKE \"%{{value}}%\""
+        }
+      }
+    },
+    "text-input-3": {
+      "data": {
+        "header": "Surmaaja järgi:",
+        "columns": {
+          "repressed": "Isikute arv"
+        }
+      },
+      "date-of-death-from-to": {
+        "type": "input",
+        "placeholder": "Kuni aasta",
+        "visible": "true",
+        "sql": {
+          "where": "YEAR(STR_TO_DATE(k.Surm, \"%Y-%m-%d\")) <= {{value}}"
+        }
+      }
+    },
+    "text-input-4": {
+      "data": {
+        "header": "Surmakoha järgi:",
+        "columns": {
+          "repressed": "Isikute arv"
+        }
+      },
+      "deathplace-input": {
+        "type": "input",
+        "placeholder": "",
+        "visible": "true",
+        "sql": {
+          "select": "k.Surmakoht",
+          "where": "k.Surmakoht LIKE \"%{{value}}%\""
+        }
+      }
+    }
+  }
+}
