@@ -30,5 +30,5 @@ cp -R -n * /var/www/html
 
 # filters can be added and mysql queries modified in filters.json file
 
-# table rows can be modified in table_rows.json fileA
+# table rows can be modified in table_rows.json fileAA
 ```
