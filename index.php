@@ -45,11 +45,6 @@
       }
   }
 
-  $conn = new mysqli($servername, $username, $password, $db);
-  if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
-  }
-
   $filterParams = ['select', 'join', 'where'];
   foreach ($_GET as $parameter => $value) {
       if (array_key_exists($parameter, $subelements)) {

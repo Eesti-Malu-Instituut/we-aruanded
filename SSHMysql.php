@@ -15,7 +15,8 @@
 			$this->_server['sshipaddress'] = $env['SSH_IPADDRESS'];
 			$this->_server['sshport'] = $env['SSH_PORT'];
 			$this->_server['sshusername'] = $env['SSH_USERNAME'];
-			$this->_server['sshpassword'] = $env['SSH_PASSWORD'];
+            $this->_server['sshpubkeyfile'] = $env['SSH_PUBKEYFILE'];
+            $this->_server['sshprivkeyfile'] = $env['SSH_PRIVKEYFILE'];
 			$this->_server['mysqlipaddress'] = $env['MYSQL_IPADDRESS'];
 			$this->_server['mysqlusername'] = $env['MYSQL_USERNAME'];
 			$this->_server['mysqlpassword'] = $env['MYSQL_PASSWORD'];
@@ -29,9 +30,9 @@
             if (function_exists("ssh2_connect")	)
 			{
 				$connection = ssh2_connect($_server['sshipaddress'], $_server['sshport']);
-				
+
 				// if the SSH username and password are correct, try to run the query via ssh2_exec; if it's not correct return authentication failure to user //
-				if (ssh2_auth_password($connection, $_server['sshusername'], $_server['sshpassword'])) {
+                if (ssh2_auth_pubkey_file($connection, $_server['sshusername'], $_server['sshpubkeyfile'], $_server['sshprivkeyfile'])) {
 					
 					// set up a shell script.  use port-forwarding over 3307 to tunnel into the remote database via SSH, this COULD CHANGE depending on your server's SSH configuration.  3307 is most common.//
 					// clean up the SQL query so things like slashes, single quotes and double quotes don't cause errors //
