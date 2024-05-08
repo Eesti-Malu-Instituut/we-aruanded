@@ -11,6 +11,8 @@ See on Eesti Mälu Instituudi andmebaasi statistika repositoorium.
 ```sh
 # Clone the repository
 git clone git@github.com:Eesti-Malu-Instituut/we-aruanded.git
+# Kui ssh ühendust ei soovi tekitada, siis saab ka
+git clone https://github.com/Eesti-Malu-Instituut/we-aruanded.git html
 
 # Navigate to the project's directory
 cd we-aruanded
