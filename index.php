@@ -11,14 +11,11 @@
     <link href="styles.css" rel="stylesheet" />
   </head>
   <?php
-  ini_set('display_errors', 1);
-  ini_set('display_startup_errors', 1);
-  error_reporting(E_ALL);
   $env = parse_ini_file('.env');
-  $servername = $env['DB_SERVERNAME'];
-  $username = $env['DB_USERNAME'];
-  $password = $env['DB_PASSWORD'];
-  $db = $env['DB_NAME'];
+  $servername = $env['DB_SERVERNAME'] ?? null;
+  $username = $env['DB_USERNAME'] ?? null;
+  $password = $env['DB_PASSWORD'] ?? null;
+  $db = $env['DB_NAME'] ?? null;
   $jsonFilters = $env['JSON_FILTERS'];
   $jsonTableRows = $env['JSON_TABLEROWS'];
   require_once ('SSHMysql.php');
@@ -94,10 +91,12 @@
   $result = $sshMySQL->query($sql);
   $resultArray = [];
   $sshError = null;
-  if (!isset($result['errorset'])) {
+  if ($result['status'] === 'success') {
       $resultArray = $result['dataset'];
+  } elseif(isset($result['errorset'])) {
+      $sshError = $result['errorset'];
   } else {
-      $sshError = $resultArray['errorset'];
+      $sshError = $result['msg'];
   }
 
   $ages = $tableRows;

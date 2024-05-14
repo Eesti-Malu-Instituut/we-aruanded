@@ -17,6 +17,9 @@ git clone https://github.com/Eesti-Malu-Instituut/we-aruanded.git html
 # Navigate to the project's directory
 cd we-aruanded
 
+# Generate SSH key for ssh2_connect
+ssh-keygen -t rsa -m PEM
+
 # Copy project environment file
 cp -n .env.example .env
 
