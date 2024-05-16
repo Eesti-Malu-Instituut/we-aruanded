@@ -6,7 +6,8 @@ See on Eesti Mälu Instituudi andmebaasi statistika repositoorium.
 
 - PHP versioon 8.0 või hilisem
     `apt install php libapache2-mod-php`
-- ssh2 for PHP?
+- ssh2 for PHP
+    `apt install php-ssh2`
 
 
 ## Installeerimine
