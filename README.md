@@ -55,6 +55,12 @@ git clone git@github.com:Eesti-Malu-Instituut/we-aruanded.git
 # Navigate to the project's directory
 cd we-aruanded
 
+# Start DDEV container
+ddev start
+
+# ssh into DDEV container
+ssh ddev
+
 # Generate SSH key for ssh2_connect
 ssh-keygen -t rsa -m PEM
 
