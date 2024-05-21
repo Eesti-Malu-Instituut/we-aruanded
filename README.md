@@ -59,7 +59,7 @@ cd we-aruanded
 ddev start
 
 # ssh into DDEV container
-ssh ddev
+ddev ssh
 
 # Generate SSH key for ssh2_connect
 ssh-keygen -t rsa -m PEM
