@@ -13,16 +13,18 @@ See on Eesti Mälu Instituudi andmebaasi statistika repositoorium.
 ## Installeerimine
 
 ```sh
+# Navigate to the project's directory
+cd /var/www
+
 # Clone the repository
 git clone git@github.com:Eesti-Malu-Instituut/we-aruanded.git
 # Kui ssh ühendust ei soovi tekitada, siis saab ka
 git clone https://github.com/Eesti-Malu-Instituut/we-aruanded.git html
 
-# Navigate to the project's directory
-cd we-aruanded
-
 # Generate SSH key for ssh2_connect
-ssh-keygen -t rsa -m PEM
+sudo mkdir /var/www/.ssh
+sudo chown -R www-data /var/www/.ssh
+sudo -u www-data ssh-keygen -t rsa
 
 # Copy project environment file
 cp -n .env.example .env
