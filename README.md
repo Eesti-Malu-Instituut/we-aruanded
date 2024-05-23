@@ -61,6 +61,7 @@ Parameters:
       - extra_sql: array of full SQL query to populate column shown in array key
 
 # table rows can be modified in table_rows.json file
+```
 
 ## Local setup with DDEV
 
