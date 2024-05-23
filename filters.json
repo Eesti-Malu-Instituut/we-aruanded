@@ -4,7 +4,7 @@
       "COUNT(DISTINCT k.persoon) records",
       "YEAR(STR_TO_DATE(k.Sünd, '%Y-%m-%d')) year"
     ],
-    "from": ["memoriaal.kirjed k"],
+    "from": ["repis.kirjed k"],
     "group_by": ["year"],
     "order_by": ["year"]
   },
@@ -41,13 +41,13 @@
         "label": "1949 küüditamised",
         "visible": "true",
         "sql": {
-          "join": "LEFT JOIN memoriaal.49_kyyd_vab kv ON kv.persoon = k.persoon",
+          "join": "LEFT JOIN import.49_kyyd_vab kv ON kv.persoon = k.persoon",
           "where": {
             "repressions": "kv.persoon IS NOT NULL"
           }
         },
         "extra_sql": {
-          "arrested": "SELECT COUNT(DISTINCT k.persoon) records, YEAR(STR_TO_DATE(k.Sünd, '%Y-%m-%d')) year FROM memoriaal.kirjed k LEFT JOIN memoriaal.eraf_nimistu_vastetega env ON env.persoon = k.persoon WHERE env.persoon IS NOT NULL AND env.arreteeritud = 'Arreteeritud' GROUP BY year"
+          "arrested": "SELECT COUNT(DISTINCT k.persoon) records, YEAR(STR_TO_DATE(k.Sünd, '%Y-%m-%d')) year FROM import.kirjed k LEFT JOIN import.eraf_nimistu_vastetega env ON env.persoon = k.persoon WHERE env.persoon IS NOT NULL AND env.arreteeritud = 'Arreteeritud' GROUP BY year"
         }
       }
     },
@@ -64,7 +64,7 @@
         "label": "Arreteerimised",
         "visible": "true",
         "sql": {
-          "join": "LEFT JOIN memoriaal.eraf_nimistu_vastetega env ON env.persoon = k.persoon",
+          "join": "LEFT JOIN import.eraf_nimistu_vastetega env ON env.persoon = k.persoon",
           "where": {
             "arrested": "env.persoon IS NOT NULL AND env.arreteeritud = 'Arreteeritud'"
           }
@@ -84,7 +84,7 @@
         "label": "Rootsi kaudu põgenenud",
         "visible": "true",
         "sql": {
-          "join": "LEFT JOIN memoriaal.kirmus4 k4 ON k4.persoon = k.persoon LEFT JOIN memoriaal.polisforhor p ON p.persoon = k.persoon",
+          "join": "LEFT JOIN import.kirmus4 k4 ON k4.persoon = k.persoon LEFT JOIN import.polisforhor p ON p.persoon = k.persoon",
           "where": {
             "fled": "(k4.persoon IS NOT NULL OR p.persoon IS NOT NULL)"
           }
@@ -97,7 +97,7 @@
         "disabled": "false",
         "visible": "true",
         "sql": {
-          "join": "LEFT JOIN memoriaal.arolsen ar ON ar.persoon = k.persoon",
+          "join": "LEFT JOIN import.arolsen ar ON ar.persoon = k.persoon",
           "where": {
             "fled": "(ar.persoon IS NOT NULL AND ar.archival_unit_num LIKE '3%')"
           }
@@ -123,7 +123,7 @@
         "label": "Saksa sõjaväes teeninud",
         "visible": "true",
         "sql": {
-          "join": "LEFT JOIN memoriaal.R14_R16 r ON r.persoon = k.persoon",
+          "join": "LEFT JOIN import.R14_R16 r ON r.persoon = k.persoon",
           "where": {
             "military": "r.persoon IS NOT NULL"
           }
@@ -174,7 +174,7 @@
         "label": "Jah",
         "visible": "true",
         "sql": {
-          "join": "LEFT JOIN memoriaal.album_academicum aa ON aa.persoon = k.persoon",
+          "join": "LEFT JOIN import.album_academicum aa ON aa.persoon = k.persoon",
           "where": "aa.persoon IS NOT NULL"
         }
       }
