@@ -123,7 +123,7 @@
         "label": "Saksa sõjaväes teeninud",
         "visible": "true",
         "sql": {
-          "join": "LEFT JOIN import.R14_R16 r ON r.persoon = k.persoon",
+          "join": "LEFT JOIN import.`R14-R16` r ON r.persoon = k.persoon",
           "where": {
             "military": "r.persoon IS NOT NULL"
           }
